@@ -1,0 +1,4 @@
+%".foo>.bar>#baz" {
+    border: (1::px, :solid, #rgb (0, 255, 128)),
+    margin-right: 2::em
+}
