@@ -74,7 +74,7 @@ seq -> open seq_item sep seq_items close : seq('$1', pseq, ['$2'|'$4']).
 seq -> open_list seq_items close_list    : seq('$1', lseq, '$2').
 seq -> open_map seq_items close_map      : seq('$1', mseq, '$2').
 
-seq_item -> value_e : '$1'.
+seq_item -> op : '$1'.
 seq_item -> value colon value_e : pair('$1', '$3').
 
 seq_items -> seq_item : ['$1'].
