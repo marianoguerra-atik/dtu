@@ -6,6 +6,8 @@ node(Id, Seq, Child) -> {node, line(Id), {Id, Seq, Child}}.
 
 seq(Open, Type, Items) -> {seq, line(Open), {Type, Items}}.
 
+empty_seq(Open) -> seq(Open, lseq, []).
+
 op(Left, Symbol, Right) -> {op, line(Left), {unwrap(Symbol), Left, Right}}.
 
 alt(Open, Type, Items) -> {alt, line(Open), {Type, Items}}.
@@ -192,7 +194,7 @@ yecctoken2string(Other) ->
 
 
 
--file("/home/mariano/src/erl/dtu/src/dtu_parser.erl", 195).
+-file("/home/mariano/src/erl/dtu/src/dtu_parser.erl", 197).
 
 -dialyzer({nowarn_function, yeccpars2/7}).
 yeccpars2(0=S, Cat, Ss, Stack, T, Ts, Tzr) ->
@@ -1479,7 +1481,7 @@ yeccpars2_59_(__Stack0) ->
 yeccpars2_61_(__Stack0) ->
  [__2,__1 | __Stack] = __Stack0,
  [begin
-   node ( __1 , __2 , nil )
+   node ( __1 , __2 , empty_seq ( __2 ) )
   end | __Stack].
 
 -compile({inline,yeccpars2_62_/1}).
@@ -1487,7 +1489,7 @@ yeccpars2_61_(__Stack0) ->
 yeccpars2_62_(__Stack0) ->
  [__2,__1 | __Stack] = __Stack0,
  [begin
-   node ( __1 , __2 , nil )
+   node ( __1 , __2 , empty_seq ( __2 ) )
   end | __Stack].
 
 -compile({inline,yeccpars2_67_/1}).
@@ -1579,4 +1581,4 @@ yeccpars2_90_(__Stack0) ->
   end | __Stack].
 
 
--file("/home/mariano/src/erl/dtu/src/dtu_parser.yrl", 123).
+-file("/home/mariano/src/erl/dtu/src/dtu_parser.yrl", 125).

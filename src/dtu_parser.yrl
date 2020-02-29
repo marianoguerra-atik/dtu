@@ -16,8 +16,8 @@ Terminals
 Rootsymbol
     op.
 
-node -> node_id alt_expr : node('$1', '$2', nil).
-node -> node_id node_head           : node('$1', '$2', nil).
+node -> node_id alt_expr : node('$1', '$2', empty_seq('$2')).
+node -> node_id node_head           : node('$1', '$2', empty_seq('$2')).
 node -> node_id node_head node_body : node('$1', '$2', '$3').
 
 node_head -> seq : '$1'.
@@ -106,6 +106,8 @@ Erlang code.
 node(Id, Seq, Child) -> {node, line(Id), {Id, Seq, Child}}.
 
 seq(Open, Type, Items) -> {seq, line(Open), {Type, Items}}.
+
+empty_seq(Open) -> seq(Open, lseq, []).
 
 op(Left, Symbol, Right) -> {op, line(Left), {unwrap(Symbol), Left, Right}}.
 

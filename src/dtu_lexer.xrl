@@ -17,24 +17,24 @@ Dot         = \.
 Colon       = :
 Alt         = \|
 
-KwSign		= :
-IdSign		= %
-VarSign		= \$
+KwSign      = :
+IdSign      = %
+VarSign     = \$
 
 Endls       = (\s|\t)*(\r?\n)
 Whites      = \s+
 Tabs        = \t+
 
 % string stuff
-DString      = "(\\\^.|\\.|[^\"])*"
-SString      = '(\\\^.|\\.|[^\'])*'
-BString      = `(\\\^.|\\.|[^\`])*`
+DString     = "(\\\^.|\\.|[^\"])*"
+SString     = '(\\\^.|\\.|[^\'])*'
+BString     = `(\\\^.|\\.|[^\`])*`
 
 % identifiers
-Identifier  = [A-Z\_][a-zA-Z0-9\_\-\?]*
-Atom        = [a-z][a-zA-Z0-9\_\-\?]*
+UIdent      = [A-Z\_][a-zA-Z0-9\_\-\?]*
+LIdent      = [a-z][a-zA-Z0-9\_\-\?]*
 
-Symbol		= [\+\-\*/%^&<>=/\?!]+
+Symbol      = [\+\-\*/%^&<>=/\?!]+
 
 Rules.
 
@@ -62,12 +62,12 @@ Rules.
 {BString}                : build_string(bstr, TokenChars, TokenLine, TokenLen).
 
 % identifiers and atoms
-{Identifier}             : make_token(upid,  TokenLine, TokenChars).
-{Atom}                   : make_token(loid,  TokenLine, TokenChars).
-{KwSign}{Identifier}     : make_token(upkw,  TokenLine, tl(TokenChars)).
-{KwSign}{Atom}           : make_token(lokw,  TokenLine, tl(TokenChars)).
-{VarSign}{Identifier}    : make_token(upvar, TokenLine, tl(TokenChars)).
-{VarSign}{Atom}          : make_token(lovar, TokenLine, tl(TokenChars)).
+{UIdent}            : make_token(upid,  TokenLine, TokenChars).
+{LIdent}            : make_token(loid,  TokenLine, TokenChars).
+{KwSign}{UIdent}    : make_token(upkw,  TokenLine, tl(TokenChars)).
+{KwSign}{LIdent}    : make_token(lokw,  TokenLine, tl(TokenChars)).
+{VarSign}{UIdent}   : make_token(upvar, TokenLine, tl(TokenChars)).
+{VarSign}{LIdent}   : make_token(lovar, TokenLine, tl(TokenChars)).
 
 {Symbol}	             : make_token(symbol,  TokenLine, TokenChars).
 

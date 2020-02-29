@@ -1,0 +1,13 @@
+page(doctype: "html") [
+  html [
+    head [
+      meta(charset: "utf-8"),
+      title ["My Page"],
+      script(src: "app.js"),
+      link(rel: "stylesheet", href: "style.css", media: "all"), 
+    ],
+    body [
+      div(id: "app")
+    ]
+  ]
+]
