@@ -32,8 +32,10 @@ lex_string(String) ->
 
 ast_file(Path) ->
     case file:read_file(Path) of
-        {ok, Data} -> ast_string(binary_to_list(Data));
-        Other -> Other
+      {ok, Data} ->
+          ast_string(binary_to_list(Data));
+      Other ->
+          Other
     end.
 
 ast_string(String) ->
