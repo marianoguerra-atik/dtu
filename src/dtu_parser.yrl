@@ -6,7 +6,7 @@ Nonterminals
     alt_expr alt_items alt_item alt_item_expr.
 
 Terminals
-    dstr sstr bstr loid upid lokw upkw lovar upvar integer float
+    dstr sstr bstr loid upid rid lokw upkw rkw lovar upvar rvar integer float
     sep colon symbol
     open close
     open_list close_list
@@ -29,6 +29,7 @@ node_body -> alt_expr : '$1'.
 
 node_id -> loid : '$1'.
 node_id -> upid : '$1'.
+node_id -> rid : '$1'.
 
 op -> op_value symbol op : op('$1', '$2', '$3').
 op -> op_value : '$1'.
@@ -45,12 +46,15 @@ value -> bstr : '$1'.
 
 value -> loid : '$1'.
 value -> upid : '$1'.
+value -> rid : '$1'.
 
 value -> lokw : '$1'.
 value -> upkw : '$1'.
+value -> rkw  : '$1'.
 
 value -> lovar : '$1'.
 value -> upvar : '$1'.
+value -> rvar  : '$1'.
 
 value -> integer : '$1'.
 value -> float : '$1'.

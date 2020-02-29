@@ -70,6 +70,10 @@ Rules.
 {VarSign}{UIdent}   : make_token(upvar, TokenLine, tl(TokenChars)).
 {VarSign}{LIdent}   : make_token(lovar, TokenLine, tl(TokenChars)).
 
+{KwSign}{DString}   : make_str_token(rkw, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
+{VarSign}{DString}  : make_str_token(rvar, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
+{IdSign}{DString}  : make_str_token(rid, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
+
 {Symbol}	        : make_token(symbol,  TokenLine, TokenChars).
 {SymbolWithAlt}	    : make_token(symbol,  TokenLine, TokenChars).
 
@@ -94,12 +98,18 @@ make_token(Name, Line, Chars) ->
 make_token(Name, Line, Chars, Fun) ->
     {token, {Name, Line, Fun(Chars)}}.
 
+make_str_token(Name, Line, Chars) ->
+    {token, {Name, Line, list_to_binary(Chars)}}.
+
 %endls(Chars) ->
 %    lists:filter(fun (C) -> C == $\n orelse C == $; end, Chars).
 
 build_string(Type, Chars, Line, Len) ->
-  String = unescape_string(lists:sublist(Chars, 2, Len - 2), Line),
-    {token, {Type, Line, String}}.
+  String = get_string_content(Chars, Line, Len),
+  {token, {Type, Line, list_to_binary(String)}}.
+
+get_string_content(Chars, Line, Len) ->
+    unescape_string(lists:sublist(Chars, 2, Len - 2), Line).
 
 unescape_string(String, Line) -> unescape_string(String, Line, []).
 

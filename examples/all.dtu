@@ -14,6 +14,9 @@ Hello-There,
 $hello,
 $hello?,
 $hello-there,
+"hello!",
+'hello!',
+`hello!`,
 (),
 [],
 {},
@@ -87,4 +90,9 @@ enum (Option) {
 
 a |> b,
 a <| b,
+
+:"This is a Keyword",
+$"This is a var",
+%"This is an identifier",
+%"do something!"(),
 ]
