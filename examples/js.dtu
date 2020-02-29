@@ -15,6 +15,12 @@ module(name: "foo") [
     },
     for(a: 1, i < len, i: i + 1) [
     ],
+    try {
+      do: {foo()},
+      catch {
+        | Error(_): {bla()}
+      }
+    }
   },
 
   exports {a, b, c}

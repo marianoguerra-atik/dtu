@@ -1,0 +1,29 @@
+[
+  def: foo [a, b] {
+    foo(),
+      bar()
+  },
+  if {
+    | (a < 10): {}
+    | {}
+  },
+  do {
+    a,
+    b
+  },
+  let [a: 10, b : 20] { a + 10 },
+  loop [a: 10, b : 20] { a + 10 },
+  fn [a] {a * 2},
+  fn {
+    | []: 1
+    | [x]: x
+    | [x, y]: {x * y}
+    | [x, y & more]: {apply (x, y, more)}
+  },
+  try {
+    foo()
+  } {
+    | Error(_): :bye
+    | Exit(_): :exit
+  }
+]
