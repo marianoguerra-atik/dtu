@@ -10,6 +10,10 @@
 %% escript Entry point
 main(["lex_string", String]) ->
     print(lex_string(String));
+main(["ast_string", String]) ->
+    print(ast_string(String));
+main(["ast_file", Path]) ->
+    print(ast_file(Path));
 main(Args) ->
     io:format("Args: ~p~n", [Args]),
     erlang:halt(0).
@@ -26,8 +30,28 @@ lex_string(String) ->
           {error, Error, Extra}
     end.
 
+ast_file(Path) ->
+    case file:read_file(Path) of
+        {ok, Data} -> ast_string(binary_to_list(Data));
+        Other -> Other
+    end.
+
+ast_string(String) ->
+    case lex_string(String) of
+      {ok, Tokens, _Endline} ->
+          dtu_parser:parse(Tokens);
+      Other ->
+          Other
+    end.
+
+print({ok, Value}) ->
+    io:format("~p~n", [Value]);
 print({ok, Value, _}) ->
     io:format("~p~n", [Value]);
+print({error, {Line, dtu_parser, Reason}}) ->
+    io:format("Error:~p: ~s~n", [Line, Reason]);
+print({error, Reason}) ->
+    io:format("Error: ~p~n", [Reason]);
 print({error, Reason, Extra}) ->
     io:format("Error: ~p~n    ~p~n", [Reason, Extra]).
 

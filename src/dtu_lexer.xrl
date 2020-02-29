@@ -14,6 +14,7 @@ OpenMap     = \{
 CloseMap    = \}
 Sep         = ,
 Dot         = \.
+Colon       = :
 
 KwSign		= :
 IdSign		= %
@@ -29,8 +30,8 @@ SString      = '(\\\^.|\\.|[^\'])*'
 BString      = `(\\\^.|\\.|[^\`])*`
 
 % identifiers
-Identifier  = [A-Z\_][a-zA-Z0-9\_\?]*
-Atom        = [a-z][a-zA-Z0-9\_\?]*
+Identifier  = [A-Z\_][a-zA-Z0-9\_\-\?]*
+Atom        = [a-z][a-zA-Z0-9\_\-\?]*
 
 Symbol		= [\+\-\*/%^&<>=/\?!]+
 
@@ -49,18 +50,14 @@ Rules.
 {CloseMap}               : make_token(close_map ,  TokenLine, TokenChars).
 
 {Sep}                    : make_token(sep,         TokenLine, TokenChars).
-{SemiColon}              : make_token(semicolon,   TokenLine, TokenChars).
-{Send}                   : make_token(send_op,     TokenLine, TokenChars).
 {Hash}                   : make_token(hash,        TokenLine, TokenChars).
-{At}                     : make_token(at,          TokenLine, TokenChars).
-{ConsOp}                 : make_token(cons_op,     TokenLine, TokenChars).
 {Colon}                  : make_token(colon,       TokenLine, TokenChars).
 {Dot}                    : make_token(dot,         TokenLine, TokenChars).
 
 % string stuff
-{DString}                : build_string(dstring,  TokenChars, TokenLine, TokenLen).
-{SString}                : build_string(sstring, TokenChars, TokenLine, TokenLen).
-{BString}                : build_string(bstring, TokenChars, TokenLine, TokenLen).
+{DString}                : build_string(dstr,  TokenChars, TokenLine, TokenLen).
+{SString}                : build_string(sstr, TokenChars, TokenLine, TokenLen).
+{BString}                : build_string(bstr, TokenChars, TokenLine, TokenLen).
 
 % identifiers and atoms
 {Identifier}             : make_token(upid,  TokenLine, TokenChars).
@@ -73,7 +70,8 @@ Rules.
 {Symbol}	             : make_token(symbol,  TokenLine, TokenChars).
 
 % spaces, tabs and new lines
-{Endls}                  : make_token(nl, TokenLine, endls(TokenChars)).
+%{Endls}                  : make_token(nl, TokenLine, endls(TokenChars)).
+{Endls}                  : skip_token.
 {Whites}                 : skip_token.
 {Tabs}                   : skip_token.
 
@@ -92,8 +90,8 @@ make_token(Name, Line, Chars) ->
 make_token(Name, Line, Chars, Fun) ->
     {token, {Name, Line, Fun(Chars)}}.
 
-endls(Chars) ->
-    lists:filter(fun (C) -> C == $\n orelse C == $; end, Chars).
+%endls(Chars) ->
+%    lists:filter(fun (C) -> C == $\n orelse C == $; end, Chars).
 
 build_string(Type, Chars, Line, Len) ->
   String = unescape_string(lists:sublist(Chars, 2, Len - 2), Line),
