@@ -94,7 +94,7 @@ alt_expr -> open_list alt_items close_list    : alt('$1', lalt, '$2').
 alt_expr -> open_map alt_items close_map      : alt('$1', malt, '$2').
 
 alt_items -> alt_item : ['$1'].
-alt_items -> alt_item sep alt_items : ['$1'|'$2'].
+alt_items -> alt_item alt_items : ['$1'|'$2'].
 
 alt_item -> alt alt_item_expr : '$2'. 
 

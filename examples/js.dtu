@@ -1,0 +1,21 @@
+module(name: "foo") [
+  const {
+    a: 1,
+    b: 4,
+    c: fn (a, b) {a + b}
+  },
+
+  fn (a, b: 2) {
+    let (a: 2, c: b) [
+      a * c / 2
+    ],
+    if {
+      | (a < 10): {a + 2}
+      | else {42}
+    },
+    for(a: 1, i < len, i: i + 1) [
+    ],
+  },
+
+  exports {a, b, c}
+]

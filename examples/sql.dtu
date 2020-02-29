@@ -1,0 +1,6 @@
+select (a, b, c: d) {
+    from: {foo, bar: baz},
+    where: a = 10,
+    group-by: {a},
+    limit: 10
+}
