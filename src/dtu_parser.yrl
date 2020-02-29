@@ -1,5 +1,5 @@
 Nonterminals
-    value value_e value_e_simple
+    value value_e value_e_simple value_anno
     tag
     node node_id node_head node_body
     seq seq_item seq_items seq_empty seq_one seq_multi seq_item_one seq_items_multi
@@ -13,6 +13,7 @@ Terminals
     lokw upkw rkw
     lovar upvar rvar
     lotag uptag rtag
+    anno
     sep colon symbol
     open close
     open_list close_list
@@ -42,13 +43,15 @@ op -> op_value : '$1'.
 
 op_value -> value_e : '$1'.
 
-value_e -> value_e_simple : '$1'.
-value_e -> tag value_e_simple : tag('$1', '$2').
+value_e -> value_anno : '$1'.
+value_e -> tag value_anno : tag('$1', '$2').
 
 tag -> lotag : '$1'.
 tag -> uptag : '$1'.
 tag -> rtag  : '$1'.
 
+value_anno -> value_e_simple : '$1'.
+value_anno -> value_e_simple anno value_e_simple : anno('$1', '$3').
 
 value_e_simple -> value : '$1'.
 value_e_simple -> node : '$1'.
@@ -134,6 +137,8 @@ alt(Open, Type, Items) -> {alt, line(Open), {Type, Items}}.
 pair(Left, Right) -> {pair, line(Left), {Left, Right}}.
 
 tag(Tag, Val) -> {tag, line(Tag), {Tag, Val}}.
+
+anno(Val, Anno) -> {anno, line(Val), {Val, Anno}}.
 
 line(T) when is_tuple(T) -> element(2, T);
 line([H|_T]) -> element(2, H);

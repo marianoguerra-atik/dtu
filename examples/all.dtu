@@ -100,4 +100,7 @@ $"This is a var",
 #"Foo Bar" 42,
 #ignore lala() {},
 #wat (1 / 0),
+2 :: km/h,
+4 :: int(),
+#dec 4 :: int(),
 ]
