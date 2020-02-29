@@ -1,12 +1,18 @@
 Nonterminals
-    value value_e
+    value value_e value_e_simple
+    tag
     node node_id node_head node_body
     seq seq_item seq_items seq_empty seq_one seq_multi seq_item_one seq_items_multi
     op op_value
     alt_expr alt_items alt_item alt_item_expr.
 
 Terminals
-    dstr sstr bstr loid upid rid lokw upkw rkw lovar upvar rvar integer float
+    dstr sstr bstr
+    integer float
+    loid upid rid
+    lokw upkw rkw
+    lovar upvar rvar
+    lotag uptag rtag
     sep colon symbol
     open close
     open_list close_list
@@ -36,9 +42,17 @@ op -> op_value : '$1'.
 
 op_value -> value_e : '$1'.
 
-value_e -> value : '$1'.
-value_e -> node : '$1'.
-value_e -> open op close : '$2'.
+value_e -> value_e_simple : '$1'.
+value_e -> tag value_e_simple : tag('$1', '$2').
+
+tag -> lotag : '$1'.
+tag -> uptag : '$1'.
+tag -> rtag  : '$1'.
+
+
+value_e_simple -> value : '$1'.
+value_e_simple -> node : '$1'.
+value_e_simple -> open op close : '$2'.
 
 value -> dstr : '$1'.
 value -> sstr : '$1'.
@@ -118,6 +132,8 @@ op(Left, Symbol, Right) -> {op, line(Left), {unwrap(Symbol), Left, Right}}.
 alt(Open, Type, Items) -> {alt, line(Open), {Type, Items}}.
 
 pair(Left, Right) -> {pair, line(Left), {Left, Right}}.
+
+tag(Tag, Val) -> {tag, line(Tag), {Tag, Val}}.
 
 line(T) when is_tuple(T) -> element(2, T);
 line([H|_T]) -> element(2, H);

@@ -20,6 +20,7 @@ Alt         = \|
 KwSign      = :
 IdSign      = %
 VarSign     = \$
+TagSign     = #
 
 Endls       = (\s|\t)*(\r?\n)
 Whites      = \s+
@@ -70,9 +71,13 @@ Rules.
 {VarSign}{UIdent}   : make_token(upvar, TokenLine, tl(TokenChars)).
 {VarSign}{LIdent}   : make_token(lovar, TokenLine, tl(TokenChars)).
 
+{TagSign}{UIdent}   : make_token(uptag, TokenLine, tl(TokenChars)).
+{TagSign}{LIdent}   : make_token(lotag, TokenLine, tl(TokenChars)).
+
 {KwSign}{DString}   : make_str_token(rkw, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
 {VarSign}{DString}  : make_str_token(rvar, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
 {IdSign}{DString}  : make_str_token(rid, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
+{TagSign}{DString}  : make_str_token(rtag, TokenLine, get_string_content(tl(TokenChars), TokenLine, TokenLen - 1)).
 
 {Symbol}	        : make_token(symbol,  TokenLine, TokenChars).
 {SymbolWithAlt}	    : make_token(symbol,  TokenLine, TokenChars).
