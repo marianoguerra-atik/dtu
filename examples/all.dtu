@@ -1,3 +1,4 @@
+[
 1,
 1.2,
 hello,
@@ -70,3 +71,14 @@ foo{1} {1},
 a = fn (a:1) {return(a)},
 
 if (a < 10) {a * 10},
+
+cond {
+    | (a < 10) : 10,
+    | else: 42
+},
+
+enum (Option) {
+    | None,
+    | Some(x)
+},
+]

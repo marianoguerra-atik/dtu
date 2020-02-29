@@ -15,6 +15,7 @@ CloseMap    = \}
 Sep         = ,
 Dot         = \.
 Colon       = :
+Alt         = \|
 
 KwSign		= :
 IdSign		= %
@@ -52,6 +53,7 @@ Rules.
 {Sep}                    : make_token(sep,         TokenLine, TokenChars).
 {Hash}                   : make_token(hash,        TokenLine, TokenChars).
 {Colon}                  : make_token(colon,       TokenLine, TokenChars).
+{Alt}                    : make_token(alt,         TokenLine, TokenChars).
 {Dot}                    : make_token(dot,         TokenLine, TokenChars).
 
 % string stuff
