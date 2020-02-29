@@ -34,7 +34,8 @@ BString     = `(\\\^.|\\.|[^\`])*`
 UIdent      = [A-Z\_][a-zA-Z0-9\_\-\?]*
 LIdent      = [a-z][a-zA-Z0-9\_\-\?]*
 
-Symbol      = [\+\-\*/%^&<>=/\?!]+
+Symbol        = [\+\-\*/%^&<>=/\?!]+
+SymbolWithAlt = [\|\+\-\*/%^&<>=/\?!][\|\+\-\*/%^&<>=/\?!]+
 
 Rules.
 
@@ -69,7 +70,8 @@ Rules.
 {VarSign}{UIdent}   : make_token(upvar, TokenLine, tl(TokenChars)).
 {VarSign}{LIdent}   : make_token(lovar, TokenLine, tl(TokenChars)).
 
-{Symbol}	             : make_token(symbol,  TokenLine, TokenChars).
+{Symbol}	        : make_token(symbol,  TokenLine, TokenChars).
+{SymbolWithAlt}	    : make_token(symbol,  TokenLine, TokenChars).
 
 % spaces, tabs and new lines
 %{Endls}                  : make_token(nl, TokenLine, endls(TokenChars)).
