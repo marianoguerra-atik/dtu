@@ -20,7 +20,13 @@ module(name: "foo") [
       catch {
         | Error(_): {bla()}
       }
+    },
+    pipe (a) {
+        | foo()
+        | bar()
+        | baz()
     }
+    
   },
 
   exports {a, b, c}
