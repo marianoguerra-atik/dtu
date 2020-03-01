@@ -1,0 +1,9 @@
+{
+    "string": "hello",
+	"bool": true,
+	"int": 4,
+    "float": 1.2,
+    "list": [],
+    "obj": {},
+    "null": null
+}
