@@ -6,27 +6,37 @@ module(name: "foo") [
   },
 
   fn (a, b: 2) {
-    let (a: 2, c: b) [
+    let (a: 2, c: b) {
       a * c / 2
-    ],
+    },
     if {
       | (a < 10): {a + 2}
-      | else {42}
+      | else: {42}
     },
-    for(a: 1, i < len, i: i + 1) [
-    ],
+    for(let (a = 1, len = 10), i < len, i += 1) {
+        console.log(a)
+    },
     try {
-      do: {foo()},
+      {
+        foo()
+      },
       catch {
-        | Error(_): {bla()}
+        Error(_) {bla()}
       }
     },
     pipe (a) {
-        | foo()
-        | bar()
-        | baz()
+      | foo()
+      | bar()
+      | baz()
     }
-    
+  },
+  class (User) {
+    constructor(username) {
+        this.username = username,
+    },
+    sayHi() {
+        console.log(this.username)
+    }
   },
 
   exports {a, b, c}
