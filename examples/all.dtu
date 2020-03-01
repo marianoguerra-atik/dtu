@@ -122,4 +122,15 @@ a.b/c.d,
 A.b/C.d,
 "",
 foo as bar,
+@attr foo(),
+@Attr foo(),
+@"a t t r" foo(),
+@attr @Attr foo(),
+@attr() foo(),
+@attr(a) foo(),
+@attr(a: 1) foo(),
+@attr(a: 1, b) foo(),
+@foo
+@bar
+baz(),
 ]

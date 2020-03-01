@@ -1,0 +1,62 @@
+[
+@css
+%".foo>.bar>#baz" {
+    border: (1::px, :solid, #rgb (0, 255, 128)),
+    margin-right: 2::em
+},
+
+@html
+html [
+    head [
+        meta(charset: "utf-8"),
+        title ["My Page"],
+        script(src: "app.js"),
+        link(rel: "stylesheet", href: "style.css", media: "all"), 
+    ],
+    body [
+        div(id: "app")
+    ]
+],
+@config
+{
+    "string": "hello",
+	"bool": true,
+	"int": 4,
+    "float": 1.2,
+    "list": [],
+    "obj": {},
+    "null": null
+},
+@js
+module(name: "foo") {
+  const {
+    a: 1,
+  },
+
+  fn (a, b: 2) {
+    let (a: 2, c: b) [
+      a * c / 2
+    ],
+    if {
+      | (a < 10): {a + 2}
+      | else {42}
+    },
+    for(a: 1, i < len, i: i + 1) [
+    ],
+    try {
+      do: {foo()},
+      catch {
+        | Error(_): {bla()}
+      }
+    },
+    pipe (a) {
+        | foo()
+        | bar()
+        | baz()
+    }
+    
+  },
+
+  exports {a, b, c}
+}
+]

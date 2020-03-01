@@ -1,11 +1,12 @@
 Nonterminals
     value value_e value_e_simple value_anno
     tag
-    node node_id node_head node_body
+    node_simple node node_id node_head node_body
     seq seq_item seq_items
     seq_empty seq_one seq_multi seq_item_one seq_item_one_ex seq_items_multi
     op op_value
     pair_e
+    attrs attr attr_key
     alt_expr alt_items alt_item alt_item_expr.
 
 Terminals
@@ -16,6 +17,7 @@ Terminals
     qloid qupid
     lovar upvar rvar
     lotag uptag rtag
+    loattr upattr rattr
     anno
     sep colon symbol
     open close
@@ -26,9 +28,12 @@ Terminals
 Rootsymbol
     op.
 
-node -> node_id alt_expr : node('$1', '$2', empty_seq('$2')).
-node -> node_id node_head           : node('$1', '$2', empty_seq('$2')).
-node -> node_id node_head node_body : node('$1', '$2', '$3').
+node -> attrs node_simple : value_attrs('$1', '$2').
+node -> node_simple : '$1'.
+
+node_simple -> node_id alt_expr             : node('$1', '$2', empty_seq('$2')).
+node_simple -> node_id node_head            : node('$1', '$2', empty_seq('$2')).
+node_simple -> node_id node_head node_body  : node('$1', '$2', '$3').
 
 node_head -> seq : '$1'.
 node_head -> open seq_item close : seq('$1', pseq, ['$2']).
@@ -43,6 +48,17 @@ node_id -> rid : '$1'.
 
 node_id -> qloid : '$1'.
 node_id -> qupid : '$1'.
+
+attrs -> attr : ['$1'].
+attrs -> attr attrs : ['$1'|'$2'].
+
+attr -> attr_key : attr('$1', []).
+attr -> attr_key open close : attr('$1', []).
+attr -> attr_key open seq_items close : attr('$1', '$3').
+
+attr_key -> loattr : '$1'.
+attr_key -> upattr : '$1'.
+attr_key -> rattr  : '$1'.
 
 op -> op_value symbol op : op('$1', '$2', '$3').
 op -> op_value node_id op : node('$2', ['$1', '$3'], empty_seq('$2')).
@@ -155,6 +171,10 @@ pair(Left, Right) -> {pair, line(Left), {Left, Right}}.
 tag(Tag, Val) -> {tag, line(Tag), {Tag, Val}}.
 
 anno(Val, Anno) -> {anno, line(Val), {Val, Anno}}.
+
+attr(Key, Args) -> {attr, line(Key), {Key, Args}}.
+
+value_attrs(Attrs, Node) -> {attrs, line(Attrs), {Attrs, Node}}.
 
 line(T) when is_tuple(T) -> element(2, T);
 line([H|_T]) -> element(2, H);
