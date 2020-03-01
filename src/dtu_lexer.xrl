@@ -66,6 +66,8 @@ Rules.
 % identifiers and atoms
 {UIdent}            : make_token(upid,  TokenLine, TokenChars).
 {LIdent}            : make_token(loid,  TokenLine, TokenChars).
+{LIdent}/{LIdent}   : make_token(qloid, TokenLine, TokenChars).
+{UIdent}/{UIdent}   : make_token(qupid, TokenLine, TokenChars).
 {KwSign}{UIdent}    : make_token(upkw,  TokenLine, tl(TokenChars)).
 {KwSign}{LIdent}    : make_token(lokw,  TokenLine, tl(TokenChars)).
 {VarSign}{UIdent}   : make_token(upvar, TokenLine, tl(TokenChars)).

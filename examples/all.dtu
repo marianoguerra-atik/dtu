@@ -114,4 +114,8 @@ $"This is a var",
 #dec 4 :: int(),
 ...2,
 -2 + +4,
+a.b/c.d(),
+A.b/C.d(),
+a.b/c.d,
+A.b/C.d,
 ]

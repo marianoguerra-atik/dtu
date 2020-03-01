@@ -11,6 +11,7 @@ Terminals
     integer float
     loid upid rid
     lokw upkw rkw
+    qloid qupid
     lovar upvar rvar
     lotag uptag rtag
     anno
@@ -38,6 +39,9 @@ node_id -> loid : '$1'.
 node_id -> upid : '$1'.
 node_id -> rid : '$1'.
 
+node_id -> qloid : '$1'.
+node_id -> qupid : '$1'.
+
 op -> op_value symbol op : op('$1', '$2', '$3').
 op -> op_value : '$1'.
 
@@ -64,7 +68,10 @@ value -> bstr : '$1'.
 
 value -> loid : '$1'.
 value -> upid : '$1'.
-value -> rid : '$1'.
+value -> rid  : '$1'.
+
+value -> qloid : '$1'.
+value -> qupid : '$1'.
 
 value -> lokw : '$1'.
 value -> upkw : '$1'.
