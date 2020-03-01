@@ -59,7 +59,7 @@ Rules.
 {Alt}                    : make_token(alt,         TokenLine, TokenChars).
 
 % string stuff
-{DString}                : build_string(dstr,  TokenChars, TokenLine, TokenLen).
+{DString}                : build_string(dstr, TokenChars, TokenLine, TokenLen).
 {SString}                : build_string(sstr, TokenChars, TokenLine, TokenLen).
 {BString}                : build_string(bstr, TokenChars, TokenLine, TokenLen).
 

@@ -1,0 +1,11 @@
+[
+ls |> first(10),
+git(log, "--pretty": "format:%h") |> lines |> split-column("##", sha1, committer, desc, merged_at) |> histogram(commiter, merger),
+ps |> range(5 .. 10),
+ps |> get(mem) |> sum,
+queryex(eventlog) |> lines |> trim |> parse("{key}: {value}"),
+open(Cargo.toml) |> inc(package.version, --patch) |> save,
+open(bands.txt) |> lines |> split-column(":", Band, Album, Year) |> skip(1) |> sort-by(Year),
+rg(-c, Tagged) |> lines |> split-column(":", file, line_count) |> str(--to-int, line_count) |> sort-by(line_count) |> reverse,
+git/branch(--merged) |> lines |> where {$it != "* master"} |> git/branch(-D, $it)
+]
