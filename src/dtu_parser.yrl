@@ -43,6 +43,7 @@ node_id -> qloid : '$1'.
 node_id -> qupid : '$1'.
 
 op -> op_value symbol op : op('$1', '$2', '$3').
+op -> op_value node_id op : node('$2', ['$1', '$3'], empty_seq('$2')).
 op -> op_value : '$1'.
 
 op_value -> value_e : '$1'.

@@ -1,6 +1,6 @@
-select (a, b, c: d) {
-    from: {foo, bar: baz},
+select (a, b, c as d) {
+    from: {foo, bar as baz},
     where: a = 10,
-    group-by: {a},
+    group-by: a,
     limit: 10
 }
