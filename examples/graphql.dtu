@@ -37,7 +37,7 @@ type (Person) {
     height(unit: FOOT)
   }
 },
-query (HeroComparison: ($first: Int = 3,)) {
+query (HeroComparison: ($first: Int = 3)) {
   leftComparison: hero(episode: EMPIRE) {
     ...comparisonFields
   },

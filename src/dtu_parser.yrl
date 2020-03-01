@@ -4,6 +4,7 @@ Nonterminals
     node node_id node_head node_body
     seq seq_item seq_items seq_empty seq_one seq_multi seq_item_one seq_items_multi
     op op_value
+    pair_e
     alt_expr alt_items alt_item alt_item_expr.
 
 Terminals
@@ -96,6 +97,7 @@ seq_empty -> open_list close_list : seq('$1', lseq, []).
 seq_empty -> open_map close_map   : seq('$1', mseq, []).
 
 seq_one -> open seq_item_one close : seq('$1', pseq, ['$2']).
+seq_one -> open pair_e close : seq('$1', pseq, ['$2']).
 seq_one -> open_list seq_item_one close_list : seq('$1', lseq, ['$2']).
 seq_one -> open_list seq_item close_list : seq('$1', lseq, ['$2']).
 seq_one -> open_map seq_item_one close_map : seq('$1', mseq, ['$2']).
@@ -109,7 +111,9 @@ seq_multi -> open_list seq_items_multi close_list : seq('$1', lseq, '$2').
 seq_multi -> open_map seq_items_multi close_map   : seq('$1', mseq, '$2').
 
 seq_item -> op : '$1'.
-seq_item -> value colon op : pair('$1', '$3').
+seq_item -> pair_e : '$1'.
+
+pair_e -> value colon op : pair('$1', '$3').
 
 seq_item_one -> seq_item sep : '$1'.
 
