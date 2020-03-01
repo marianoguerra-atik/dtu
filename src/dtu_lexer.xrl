@@ -32,11 +32,11 @@ SString     = '(\\\^.|\\.|[^\'])*'
 BString     = `(\\\^.|\\.|[^\`])*`
 
 % identifiers
-UIdent      = [A-Z\_][a-zA-Z0-9\_\-\?]*
-LIdent      = [a-z][a-zA-Z0-9\_\-\?]*
+UIdent      = [A-Z\_][a-zA-Z0-9\_\-\?\.\@]*
+LIdent      = [a-z][a-zA-Z0-9\_\-\?\.\@]*
 
 Symbol        = [\+\-\*/%^&<>=/\?!]+
-SymbolWithAlt = [\|\+\-\*/%^&<>=/\?!][\|\+\-\*/%^&<>=/\?!]+
+SymbolWithAlt = [\.\|\+\-\*/%^&<>=/\?!][\.\|\+\-\*/%^&<>=/\?!]+
 
 Rules.
 
@@ -57,7 +57,6 @@ Rules.
 {Colon}                  : make_token(colon,       TokenLine, TokenChars).
 {Colon}{Colon}           : make_token(anno,        TokenLine, TokenChars).
 {Alt}                    : make_token(alt,         TokenLine, TokenChars).
-{Dot}                    : make_token(dot,         TokenLine, TokenChars).
 
 % string stuff
 {DString}                : build_string(dstr,  TokenChars, TokenLine, TokenLen).
@@ -82,6 +81,9 @@ Rules.
 
 {Symbol}	        : make_token(symbol,  TokenLine, TokenChars).
 {SymbolWithAlt}	    : make_token(symbol,  TokenLine, TokenChars).
+
+% below symbol so that symbols like ellipsis match before dot
+{Dot}                    : make_token(dot,         TokenLine, TokenChars).
 
 % spaces, tabs and new lines
 %{Endls}                  : make_token(nl, TokenLine, endls(TokenChars)).

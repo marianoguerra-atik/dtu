@@ -1,0 +1,60 @@
+[
+type (Film) {
+  title: String,
+  episode: Int,
+  releaseDate: String,
+  openingCrawl: String,
+  director: String,
+  directedBy: Person
+},
+type (Person) {
+  name: String,
+  directed: [Film],
+  actedIn: [Film]
+},
+{
+  hero {
+    name,
+    friends {
+      name,
+      homeWorld {
+        name,
+        climate
+      },
+      species {
+        name,
+        lifespan,
+        origin {
+          name
+        }
+      }
+    }
+  }
+},
+{
+  human(id: "1000") {
+    name,
+    height(unit: FOOT)
+  }
+},
+query (HeroComparison: ($first: Int = 3,)) {
+  leftComparison: hero(episode: EMPIRE) {
+    ...comparisonFields
+  },
+  rightComparison: hero(episode: JEDI) {
+    ...comparisonFields
+  }
+},
+fragment (comparisonFields: Character) {
+  name,
+  friendsConnection(first: $first) {
+    totalCount,
+    edges {
+      node {
+        name
+      }
+    }
+  }
+}
+
+]

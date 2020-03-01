@@ -42,6 +42,7 @@ op -> op_value symbol op : op('$1', '$2', '$3').
 op -> op_value : '$1'.
 
 op_value -> value_e : '$1'.
+op_value -> symbol value_e: uop('$1', '$2').
 
 value_e -> value_anno : '$1'.
 value_e -> tag value_anno : tag('$1', '$2').
@@ -131,6 +132,7 @@ seq(Open, Type, Items) -> {seq, line(Open), {Type, Items}}.
 empty_seq(Open) -> seq(Open, lseq, []).
 
 op(Left, Symbol, Right) -> {op, line(Left), {unwrap(Symbol), Left, Right}}.
+uop(Symbol, Value) -> {uop, line(Symbol), {unwrap(Symbol), Value}}.
 
 alt(Open, Type, Items) -> {alt, line(Open), {Type, Items}}.
 
