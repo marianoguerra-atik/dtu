@@ -1,7 +1,5 @@
-dtu
-=====
-
-An escript
+Data the Ultimate
+=================
 
 Build
 -----
