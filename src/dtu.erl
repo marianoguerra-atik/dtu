@@ -14,9 +14,16 @@ main(["ast_string", String]) ->
     print(ast_string(String));
 main(["ast_file", Path]) ->
     print(ast_file(Path));
+main(["walk_file", Path]) ->
+    {ok, Ast} = ast_file(Path),
+    dtu_walk:walk(fun print_node/3, Ast);
 main(Args) ->
     io:format("Args: ~p~n", [Args]),
     erlang:halt(0).
+
+print_node(State0, Path, Node) ->
+    io:format("~p: ~p~n~n", [Path, Node]),
+    {State0, Node}.
 
 lex_string(String) ->
     case dtu_lexer:string(String) of
