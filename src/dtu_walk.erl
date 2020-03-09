@@ -1,5 +1,6 @@
 -module(dtu_walk).
--export([walk/2, walk/4, new_state/0, add_warning/3, add_error/3]).
+-export([walk/2, walk/4, new_state/0, compose/1, add_warning/3, add_error/3,
+        get_errors/1, get_warnings/1]).
 
 new_state() ->
     #{errors => [], warnings => [], state => #{}}.
@@ -9,6 +10,18 @@ add_warning(State=#{warnings := Warns}, Node, Msg) ->
 
 add_error(State=#{errors := Errors}, Node, Msg) ->
     State#{errors := [{Node, Msg} | Errors]}.
+
+get_errors(#{errors := Errors}) -> Errors.
+get_warnings(#{warnings := Warns}) -> Warns.
+
+run_fns(State0, _Path, Node, []) ->
+    {State0, Node};
+run_fns(State0, Path, Node, [Fn | Fns]) ->
+    {State1, Node1} = Fn(State0, Path, Node),
+    run_fns(State1, Path, Node1, Fns).
+
+compose(Fns) ->
+    fun(State0, Path, Node) -> run_fns(State0, Path, Node, Fns) end.
 
 walk(Fn, Node) ->
     walk(new_state(), Fn, [], Node).
