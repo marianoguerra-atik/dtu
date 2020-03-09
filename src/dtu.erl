@@ -16,16 +16,17 @@ main(["ast_file", Path]) ->
     print(ast_file(Path));
 main(["walk_file", Path]) ->
     {ok, Ast} = ast_file(Path),
-    WalkFn = dtu_walk:compose([fun dtu_walkers:unify_ids/3,
-                               fun dtu_walkers:unify_kws/3,
-                               fun dtu_walkers:unify_vars/3,
-                               fun dtu_walkers:unify_strs/3,
-                               dtu_walkers:reject_match(fun ({seq, _, {mseq, _}}) ->
-                                                                {true, <<"map seq not allowed">>};
-                                                            (_) ->
-                                                                false
-                                                        end),
-                               fun print_node/3]),
+    Fns = [fun dtu_walkers:unify_ids/3,
+           fun dtu_walkers:unify_kws/3,
+           fun dtu_walkers:unify_vars/3,
+           fun dtu_walkers:unify_strs/3,
+           dtu_walkers:reject_match(fun ({seq, _, {mseq, _}}) ->
+                                            {true, <<"map seq not allowed">>};
+                                        (_) ->
+                                            false
+                                    end),
+           fun print_node/3],
+    WalkFn = dtu_walk:compose(Fns),
     {StateOut, _AstOut} = dtu_walk:walk(WalkFn, Ast),
     dtu_util:print_errors_and_warnings(StateOut);
 main(Args) ->
