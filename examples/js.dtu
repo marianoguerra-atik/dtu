@@ -1,4 +1,5 @@
 module(name: "foo") [
+  import { Router, Route } from 'router',
   const {
     a: 1,
     b: 4,

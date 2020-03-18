@@ -69,6 +69,7 @@ op_value -> symbol value_e: uop('$1', '$2').
 
 value_e -> value_anno : '$1'.
 value_e -> tag value_anno : tag('$1', '$2').
+value_e -> open symbol close : '$2'.
 
 tag -> lotag : '$1'.
 tag -> uptag : '$1'.
