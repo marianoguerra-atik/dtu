@@ -1,6 +1,34 @@
 -module(dtu_walkers).
 
--export([unify_ids/3, unify_kws/3, unify_vars/3, unify_strs/3, reject_match/1]).
+-export([unify_ids/3,
+         unify_kws/3,
+         unify_vars/3,
+         unify_strs/3,
+         pseq_to_tuple/3,
+         lseq_to_list/3,
+         mseq_to_map/3,
+         unwrap_node_id/3,
+         reject_match/1]).
+
+pseq_to_tuple(State0, _Path, {seq, Line, {pseq, Items}}) ->
+    {State0, {tuple, Line, Items}};
+pseq_to_tuple(State0, _Path, Node) ->
+    {State0, Node}.
+
+lseq_to_list(State0, _Path, {seq, Line, {lseq, Items}}) ->
+    {State0, {list, Line, Items}};
+lseq_to_list(State0, _Path, Node) ->
+    {State0, Node}.
+
+mseq_to_map(State0, _Path, {seq, Line, {mseq, Items}}) ->
+    {State0, {map, Line, Items}};
+mseq_to_map(State0, _Path, Node) ->
+    {State0, Node}.
+
+unwrap_node_id(State0, _Path, {node, Line, {{id, _, Id}, S1, S2}}) ->
+    {State0, {node, Line, {Id, S1, S2}}};
+unwrap_node_id(State0, _Path, Node) ->
+    {State0, Node}.
 
 unify_ids(State0, _Path, {Type, Line, V})
     when Type =:= rid; Type =:= loid; Type =:= upid ->
