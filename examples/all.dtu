@@ -138,4 +138,5 @@ case (A) {
     | 2: {20}
 },
 [X for (X in range(1, 2), (X < 10), (Y in (1 .. 2)), Y < 10)],
+$Dragging(...s) -> onDragging
 ]

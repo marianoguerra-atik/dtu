@@ -49,6 +49,10 @@ node_id -> rid : '$1'.
 node_id -> qloid : '$1'.
 node_id -> qupid : '$1'.
 
+node_id -> lovar: '$1'.
+node_id -> upvar: '$1'.
+node_id -> rvar: '$1'.
+
 attrs -> attr : ['$1'].
 attrs -> attr attrs : ['$1'|'$2'].
 
